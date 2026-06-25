@@ -1,16 +1,17 @@
-import random
 from data import Data
 from urls import Urls
 from locators import Locators
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from helpers import Helpers
 
 
 class TestUsersRegistration:
     def test_user_registration(self, driver):
         driver.find_element(*Locators._ENTER_AND_REGISTRATION_BUTTON).click()  # Нажать кнопку "Вход и регистрация"
         driver.find_element(*Locators._NO_ACCOUNT_BUTTON).click()  # Нажать кнопку "Нет аккаунта"
-        driver.find_element(*Locators._EMAIL_INPUT).send_keys(f'mail_{random.randint(100, 999)}@gmail.com')
+        generate_email = Helpers.generate_email()
+        driver.find_element(*Locators._EMAIL_INPUT).send_keys(generate_email)
         driver.find_element(*Locators._EMAIL_PASSWORD).send_keys(Data.USER_PASSWORD)  # Заполнить поле Password
         driver.find_element(*Locators._REPEAT_PASSWORD).send_keys(Data.USER_PASSWORD)  # Повторно заполнить Password
         driver.find_element(*Locators._SUBMIT_BUTTON).click()  # нажать кнопку «Создать аккаунт».
